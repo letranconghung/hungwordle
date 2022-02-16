@@ -2,18 +2,21 @@ import React, { useEffect, useContext } from "react";
 import KeyboardRow from "./KeyboardRow";
 import { GlobalContext } from "../../App";
 const Keyboard = (props) => {
-  const dispatchAllLetters = useContext(GlobalContext).allLettersDispatch;
+  const {data, dispatchData} = useContext(GlobalContext)
+  console.log(data);
   useEffect(() => {
     const filterAndSubmitInput = (e) => {
       if (e.key === "Enter") {
-        console.log("enter pressed");
+        dispatchData({
+          type: "checkCurrentGuess"
+        })
       } else if (e.key === "Backspace") {
-        dispatchAllLetters({
-          type: "remove",
+        dispatchData({
+          type: "removeLetter",
         });
       } else if (e.code.slice(0, 3) === "Key") {
-        dispatchAllLetters({
-          type: "add",
+        dispatchData({
+          type: "addLetter",
           letter: e.key.toLowerCase(),
         });
       }

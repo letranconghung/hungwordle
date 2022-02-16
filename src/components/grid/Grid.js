@@ -3,7 +3,8 @@ import Row from "./Row";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
 const Grid = () => {
-  const allLetters = useContext(GlobalContext).allLettersValue;
+  const {data, dispatchData} = useContext(GlobalContext)
+  const allLetters = data.letters
   var lettersList = new Array(6);
   for (var i = 0; i < lettersList.length; ++i) {
     lettersList[i] = new Array(5);

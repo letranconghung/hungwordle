@@ -2,11 +2,11 @@ import React, {useContext} from "react";
 import {BsBackspace} from 'react-icons/bs'
 import { GlobalContext } from "../../App";
 const BackspaceButton = (props) => {
-  const dispatchAllLetters = useContext(GlobalContext).allLettersDispatch;
+  const {data, dispatchData} = useContext(GlobalContext)
   return (
     <button className="px-5 py-7 font-semibold bg-gray-300 mx-1 rounded relative" onClick={()=>{
-      dispatchAllLetters({
-        type: "remove"
+      dispatchData({
+        type: "removeLetter"
       })
     }}>
       <span

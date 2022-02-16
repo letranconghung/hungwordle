@@ -2,13 +2,13 @@ import React, {useContext} from "react";
 import { GlobalContext } from "../../App";
 const CharButton = (props) => {
   const {letter} = props
-  const dispatchAllLetters = useContext(GlobalContext).allLettersDispatch
+  const {data, dispatchData} = useContext(GlobalContext)
   return (
     <button
       className="px-5 py-7 bg-gray-300 mx-1 rounded relative"
       onClick={() => {
-        dispatchAllLetters({
-          type: "add",
+        dispatchData({
+          type: "addLetter",
           letter: letter,
         });
       }}

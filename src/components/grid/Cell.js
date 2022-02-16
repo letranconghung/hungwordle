@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { GlobalContext } from "../../App";
 
 const Cell = (props) => {
-  const dispatchAllLetters = useContext(GlobalContext).allLettersDispatch;
   const { letter, color } = props;
   let textColor = "";
   switch (color) {
@@ -17,10 +16,10 @@ const Cell = (props) => {
       break;
   }
   return (
-    <button className={`px-8 py-8 mx-1 ${textColor} inline-block`}>
+    <span className={`px-8 py-8 mx-1 ${textColor} inline-block`}>
       <div className="relative">
         <span
-          className="absolute text-white font-normal text-3xl"
+          className="absolute text-white font-bold text-3xl font-secondary"
           style={{
             top: "50%",
             left: "50%",
@@ -30,7 +29,7 @@ const Cell = (props) => {
           {letter.toUpperCase()}
         </span>
       </div>
-    </button>
+    </span>
   );
 };
 
