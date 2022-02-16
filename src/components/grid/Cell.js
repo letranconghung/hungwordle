@@ -2,31 +2,38 @@ import React, { useContext } from "react";
 import { GlobalContext } from "../../App";
 
 const Cell = (props) => {
-  const { letter, color } = props;
-  let textColor = "";
-  switch (color) {
+  const cellSettings = props.cellSettings;
+  let colorClass = "";
+  switch (cellSettings.color) {
     case "green":
-      textColor = "bg-green-600";
+      colorClass = "bg-green-600 border-transparent border-2 text-white";
       break;
     case "yellow":
-      textColor = "bg-yellow-500";
+      colorClass = "bg-yellow-500 border-transparent border-2 text-white";
       break;
     case "gray":
-      textColor = "bg-gray-400";
+      colorClass = "bg-gray-600 border-transparent border-2 text-white";
       break;
+    case "white": {
+      if (cellSettings.letter == "")
+        colorClass = "bg-white border-gray-300 border-2 text-black";
+      else colorClass = "bg-white border-black border-2 text-black";
+    }
   }
   return (
-    <span className={`px-8 py-8 mx-1 ${textColor} inline-block`}>
+    <span
+      className={`px-7 py-7 mx-1 ${colorClass} inline-block transition-all`}
+    >
       <div className="relative">
         <span
-          className="absolute text-white font-bold text-3xl font-secondary"
+          className="absolute font-bold text-3xl font-secondary"
           style={{
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
           }}
         >
-          {letter.toUpperCase()}
+          {cellSettings.letter.toUpperCase()}
         </span>
       </div>
     </span>

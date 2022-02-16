@@ -2,12 +2,12 @@ import React from "react";
 import Cell from "./Cell";
 
 const Row = (props) => {
-  const letters = props.letters;
+  const rowSettings = props.rowSettings;
   return (
     <div className="my-1">
       {
-        letters.map((letter, index) => {
-          return <Cell letter={letter} color="gray" key={`cell-${index}`}/>
+        rowSettings.map((cellSettings, index) => {
+          return <Cell cellSettings={cellSettings} key={`cell-${index}`}/>
         })
       }
     </div>

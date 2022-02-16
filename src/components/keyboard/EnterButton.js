@@ -4,7 +4,7 @@ const EnterButton = (props) => {
   const { data, dispatchData } = useContext(GlobalContext);
   return (
     <button
-      className="px-12 py-7 bg-gray-300 mx-1 rounded relative"
+      className="px-8 py-7 sm:px-12 bg-gray-300 mx-1 rounded relative"
       onClick={() => {
         dispatchData({
           type: "checkCurrentGuess",

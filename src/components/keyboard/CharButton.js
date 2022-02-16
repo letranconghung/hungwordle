@@ -1,11 +1,26 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { GlobalContext } from "../../App";
 const CharButton = (props) => {
-  const {letter} = props
-  const {data, dispatchData} = useContext(GlobalContext)
+  const { letter } = props;
+  const { data, dispatchData } = useContext(GlobalContext);
+  const color = data.keyboardColors[letter];
+  var colorClass = "";
+  switch (color) {
+    case "green":
+      colorClass = "bg-green-600 text-white";
+      break;
+    case "yellow":
+      colorClass = "bg-yellow-500 text-white";
+      break;
+    case "gray":
+      colorClass = "bg-gray-600 text-white";
+      break;
+    case "white":
+      colorClass = "bg-gray-300 text-black";
+  }
   return (
     <button
-      className="px-5 py-7 bg-gray-300 mx-1 rounded relative"
+      className={`px-4 py-7 sm:px-5 mx-1 rounded relative ${colorClass} transition-all`}
       onClick={() => {
         dispatchData({
           type: "addLetter",
