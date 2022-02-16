@@ -25,7 +25,7 @@ const Keyboard = (props) => {
   }, []);
 
   return (
-    <div className="my-auto">
+    <div className="my-auto py-2">
       <KeyboardRow letters={"qwertyuiop"} lastRow={false} />
       <KeyboardRow letters={"asdfghjkl"} lastRow={false} />
       <KeyboardRow letters={"zxcvbnm"} lastRow={true} />

@@ -5,12 +5,52 @@ import Keyboard from "./components/keyboard/Keyboard";
 import React, { useState, useReducer, useEffect } from "react";
 import { GOAL_WORDS } from "./data/GoalWords";
 import { GUESS_WORDS } from "./data/GuessWords";
-import { KEYBOARD_COLORS_INIT } from "./data/Initialize";
 import AlertModal from "./components/modals/AlertModal";
 import SuccessModal from "./components/modals/SuccessModal";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
+import NewGameButton from "./components/gameControl/NewGameButton";
 export const GlobalContext = React.createContext();
 function App() {
+  const KEYBOARD_COLORS_INIT = {
+    q: "white",
+    w: "white",
+    e: "white",
+    r: "white",
+    t: "white",
+    y: "white",
+    u: "white",
+    i: "white",
+    o: "white",
+    p: "white",
+    a: "white",
+    s: "white",
+    d: "white",
+    f: "white",
+    g: "white",
+    h: "white",
+    j: "white",
+    k: "white",
+    l: "white",
+    z: "white",
+    x: "white",
+    c: "white",
+    v: "white",
+    b: "white",
+    n: "white",
+    m: "white",
+  };
+
+  const DATA_INIT = {
+    goalWord: "",
+    letters: [],
+    currentGuess: "",
+    knownGridColors: [],
+    alertModalMessage: "",
+    showSuccessModal: false,
+    gameEnded: false,
+    keyboardColors: KEYBOARD_COLORS_INIT,
+  };
+
   const dataReducer = (state, action) => {
     switch (action.type) {
       case "addLetter": {
@@ -69,7 +109,8 @@ function App() {
                 }
                 goalCharUsed[goalIndex] = true;
               }
-              if(keyboardColors[guessChar] == "white") keyboardColors[guessChar] = "gray"
+              if (keyboardColors[guessChar] == "white")
+                keyboardColors[guessChar] = "gray";
             }
           }
           console.log("finished comparison:\n", result);
@@ -91,18 +132,18 @@ function App() {
       case "hideModal": {
         return { ...state, alertModalMessage: "", showSuccessModal: false };
       }
+      case "reset": {
+        console.log("game has been reset");
+        const goalWord =
+          GOAL_WORDS[Math.floor(Math.random() * GOAL_WORDS.length)];
+        return {
+          ...DATA_INIT,
+          goalWord: goalWord
+        };
+      }
     }
   };
-  const [data, dispatchData] = useReducer(dataReducer, {
-    goalWord: "",
-    letters: [],
-    currentGuess: "",
-    knownGridColors: [],
-    alertModalMessage: "",
-    showSuccessModal: false,
-    gameEnded: false,
-    keyboardColors: KEYBOARD_COLORS_INIT,
-  });
+  const [data, dispatchData] = useReducer(dataReducer, DATA_INIT);
 
   useEffect(() => {
     // game initialization
@@ -125,7 +166,10 @@ function App() {
         <div className="h-screen flex flex-col content-between">
           <Header />
           <Grid />
-          <Keyboard />
+          <div>
+            <NewGameButton />
+            <Keyboard />
+          </div>
         </div>
         <AlertModal />
         <SuccessModal />
