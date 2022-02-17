@@ -75,7 +75,7 @@ const InstructionsModal = () => {
             </a>
           </p>
           <a
-            href="https://github.com/letranconghung/hungwordleclone"
+            href="https://github.com/letranconghung/hungwordle"
             className="text-xs underline underline-offset-1"
             target="_blank"
           >

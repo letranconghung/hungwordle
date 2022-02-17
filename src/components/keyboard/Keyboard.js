@@ -10,20 +10,20 @@ const Keyboard = (props) => {
       if (data.gameStatus == "playing"){
         if (e.key === "Enter") {
           if (data.currentGuess.length != 5) {
-            console.log("filterInput not enough letters");
-            console.log("length: ", data.currentGuess.length);
+            // console.log("filterInput not enough letters");
+            // console.log("length: ", data.currentGuess.length);
             dispatchVisualData({
               type: "showAlertModal",
               alertModalMessage: "Not enough letters!",
             });
           } else if (!GUESS_WORDS.includes(data.currentGuess)) {
-            console.log("filterInput not in word list!");
+            // console.log("filterInput not in word list!");
             dispatchVisualData({
               type: "showAlertModal",
               alertModalMessage: "Not in word list!",
             });
           } else {
-            console.log("filterInput valid, checkCurrentguess now.");
+            // console.log("filterInput valid, checkCurrentguess now.");
             dispatchData({
               type: "checkCurrentGuess",
             });

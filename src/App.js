@@ -52,7 +52,7 @@ function App() {
   const dataReducer = (state, action) => {
     switch (action.type) {
       case "addLetter": {
-        console.log("dataReducer case addLetter");
+        // console.log("dataReducer case addLetter");
         if (
           state.letters.length < 30 &&
           state.currentGuess.length <= 4 &&
@@ -66,7 +66,7 @@ function App() {
         } else return state;
       }
       case "removeLetter": {
-        console.log("dataReducer case removeLetter");
+        // console.log("dataReducer case removeLetter");
         if (state.currentGuess.length >= 1)
           return {
             ...state,
@@ -76,11 +76,11 @@ function App() {
         else return state;
       }
       case "setGoalWord": {
-        console.log("dataReducer case setGoalWord");
+        // console.log("dataReducer case setGoalWord");
         return { ...state, goalWord: action.goalWord };
       }
       case "checkCurrentGuess": {
-        console.log("dataReducer case checkCurrentGuess");
+        // console.log("dataReducer case checkCurrentGuess");
         if (state.gameStatus == "playing") {
           var result = ["gray", "gray", "gray", "gray", "gray"];
           var goalCharUsed = [false, false, false, false, false];
@@ -111,7 +111,7 @@ function App() {
               keyboardColors[guessChar] = "gray";
           }
           if (state.currentGuess == state.goalWord) {
-            console.log("correct word!");
+            // console.log("correct word!");
             return {
               ...state,
               currentGuess: "",
@@ -134,7 +134,7 @@ function App() {
         } else return state;
       }
       case "reset": {
-        console.log("dataReducer case reset");
+        // console.log("dataReducer case reset");
         const goalWord =
           GOAL_WORDS[Math.floor(Math.random() * GOAL_WORDS.length)];
         return {
@@ -172,14 +172,14 @@ function App() {
         };
       }
       case "toggleDarkMode": {
-        console.log("dataReducer case toggleDarkMode");
+        // console.log("dataReducer case toggleDarkMode");
         return {
           ...state,
           darkMode: !state.darkMode,
         };
       }
       case "dataLogged": {
-        console.log("dataReducer case dataLogged");
+        // console.log("dataReducer case dataLogged");
         return {
           ...state,
           dataLogged: true,
@@ -191,23 +191,23 @@ function App() {
   const visualDataReducer = (state, action) => {
     switch (action.type) {
       case "hideModal": {
-        console.log("visualDataReducer case hideModal");
+        // console.log("visualDataReducer case hideModal");
         return { ...state, alertModalMessage: "", showSuccessModal: false };
       }
       case "showAlertModal": {
-        console.log("visualDataReducer case showAlertModal");
+        // console.log("visualDataReducer case showAlertModal");
         return { ...state, alertModalMessage: action.alertModalMessage };
       }
       case "showSuccessModal": {
-        console.log("visualDataReducer case showSuccessModal");
+        // console.log("visualDataReducer case showSuccessModal");
         return { ...state, showSuccessModal: true };
       }
       case "toggleStatsModal": {
-        console.log("visualDataReducer case toggleStatsModal");
+        // console.log("visualDataReducer case toggleStatsModal");
         return { ...state, showStatsModal: !state.showStatsModal };
       }
       case "toggleInstructionsModal": {
-        console.log("visualDataReducer case toggleInstructionsModal");
+        // console.log("visualDataReducer case toggleInstructionsModal");
         return {...state, showInstructionsModal: !state.showInstructionsModal}
       }
     }
@@ -222,9 +222,9 @@ function App() {
 
   useEffect(() => {
     // subscribe to changes in data to liaise between dispatch functions
-    console.log("linker useeffect: \n data", data, "\nvisualData\n", visualData);
+    // console.log("linker useeffect: \n data", data, "\nvisualData\n", visualData);
     if (data.gameStatus != "playing" && !data.dataLogged) {
-      console.log("linker ran");
+      // console.log("linker ran");
       if (data.gameStatus == "failure") {
         dispatchVisualData({
           type: "showAlertModal",
@@ -267,7 +267,7 @@ function App() {
   }, [data]);
 
   useEffect(() => {
-    console.log("app initialization goalword setting");
+    // console.log("app initialization goalword setting");
     const goalWord = GOAL_WORDS[Math.floor(Math.random() * GOAL_WORDS.length)];
     dispatchData({
       type: "setGoalWord",
