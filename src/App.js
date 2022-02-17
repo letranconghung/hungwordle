@@ -302,10 +302,10 @@ function App() {
           dispatchVisualData: dispatchVisualData,
         }}
       >
-        <div className="h-screen flex flex-col content-between bg-gray-50 dark:bg-zinc-900">
+        <div className="h-screen flex flex-col justify-between bg-gray-50 dark:bg-zinc-900">
           <Header />
           <Grid />
-          <div>
+          <div className="pb-4">
             <div>
               <GameControlButton content="New Game" />
               <GameControlButton content="Reveal Word" />

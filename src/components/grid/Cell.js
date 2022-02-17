@@ -22,7 +22,7 @@ const Cell = (props) => {
   }
   return (
     <span
-      className={`px-7 py-7 mx-1 ${colorClass} inline-block transition-all`}
+      className={`px-6 py-6 sm:px-7 sm:py-7 mx-1 ${colorClass} inline-block transition-all`}
     >
       <div className="relative">
         <span

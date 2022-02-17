@@ -20,7 +20,7 @@ const CharButton = (props) => {
   }
   return (
     <button
-      className={`px-4 py-7 sm:px-5 mx-1 rounded relative ${colorClass} transition-all`}
+      className={`px-4 py-6 mx-0.5 sm:py-7 sm:px-5 sm:mx-1 rounded relative ${colorClass} transition-all`}
       onClick={(e) => {
         dispatchData({
           type: "addLetter",

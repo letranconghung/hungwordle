@@ -2,7 +2,7 @@ import React from "react";
 
 const GraphicStats = (props) => {
   const { label, value, weight } = props;
-  const widthPct = weight ? `${weight}%` : `4%`;
+  const widthPct = weight ? `${weight}%` : `5%`;
   const labelClass = weight ? "flex justify-end pr-2" : "flex justify-center";
   return (
     <div className="flex pb-2">

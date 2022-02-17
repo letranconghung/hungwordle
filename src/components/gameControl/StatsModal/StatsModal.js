@@ -27,7 +27,7 @@ const StatsModal = (props) => {
           });
         }}
       ></div>
-      <div className="fixed top-1/2 left-1/2 p-10 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-zinc-800 rounded shadow-xl">
+      <div className="fixed top-1/2 left-1/2 p-7 sm:p-10 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-zinc-800 rounded shadow-xl border-gray-200 dark:border-zinc-600 border-2">
         <button
           className="absolute top-3 right-3"
           onClick={(e) => {

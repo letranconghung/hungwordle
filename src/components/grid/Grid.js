@@ -23,7 +23,7 @@ const Grid = () => {
     gridSettings[Math.floor(i / 5)][i % 5].color = knownGridColors[i]
   }
   return (
-    <div className="my-auto">
+    <div className="">
       {gridSettings.map((rowSettings, index) => {
         return <Row rowSettings={rowSettings} key={`row-${index}`} />;
       })}

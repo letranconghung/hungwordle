@@ -4,7 +4,7 @@ import { GlobalContext } from "../../App";
 const BackspaceButton = (props) => {
   const {data, dispatchData} = useContext(GlobalContext)
   return (
-    <button className="px-4 py-7 sm:px-5 font-semibold mx-1 rounded relative bg-gray-300 text-black dark:bg-neutral-500 dark:text-white" onClick={(e)=>{
+    <button className="px-4 py-6 mx-0.5 sm:py-7 sm:px-5 sm:mx-1 font-semibold rounded relative bg-gray-300 text-black dark:bg-neutral-500 dark:text-white" onClick={(e)=>{
       dispatchData({
         type: "removeLetter"
       })
