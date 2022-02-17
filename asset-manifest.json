@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/hungwordleclone/static/css/main.db750289.css",
-    "main.js": "/hungwordleclone/static/js/main.6dd98315.js",
-    "index.html": "/hungwordleclone/index.html",
-    "main.db750289.css.map": "/hungwordleclone/static/css/main.db750289.css.map",
-    "main.6dd98315.js.map": "/hungwordleclone/static/js/main.6dd98315.js.map"
+    "main.css": "/hungwordle/static/css/main.db750289.css",
+    "main.js": "/hungwordle/static/js/main.dcb69844.js",
+    "index.html": "/hungwordle/index.html",
+    "main.db750289.css.map": "/hungwordle/static/css/main.db750289.css.map",
+    "main.dcb69844.js.map": "/hungwordle/static/js/main.dcb69844.js.map"
   },
   "entrypoints": [
     "static/css/main.db750289.css",
-    "static/js/main.6dd98315.js"
+    "static/js/main.dcb69844.js"
   ]
 }
