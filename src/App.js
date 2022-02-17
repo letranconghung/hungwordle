@@ -7,8 +7,7 @@ import { GOAL_WORDS } from "./data/GoalWords";
 import { GUESS_WORDS } from "./data/GuessWords";
 import AlertModal from "./components/modals/AlertModal";
 import SuccessModal from "./components/modals/SuccessModal";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
-import NewGameButton from "./components/gameControl/NewGameButton";
+import GameControlButton from "./components/gameControl/GameControlButton";
 export const GlobalContext = React.createContext();
 function App() {
   const KEYBOARD_COLORS_INIT = {
@@ -101,17 +100,19 @@ function App() {
               ) {
                 if (goalIndex == guessIndex) {
                   result[guessIndex] = "green";
-                  if (keyboardColors[guessChar] === "white")
-                    keyboardColors[guessChar] = "green";
+                  keyboardColors[guessChar] = "green";
                 } else {
                   result[guessIndex] = "yellow";
                   keyboardColors[guessChar] = "yellow";
                 }
                 goalCharUsed[goalIndex] = true;
               }
-              if (keyboardColors[guessChar] == "white")
-                keyboardColors[guessChar] = "gray";
             }
+          }
+          for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
+            const guessChar = state.currentGuess[guessIndex];
+            if (keyboardColors[guessChar] == "white")
+              keyboardColors[guessChar] = "gray";
           }
           console.log("finished comparison:\n", result);
           if (state.currentGuess == state.goalWord)
@@ -138,7 +139,14 @@ function App() {
           GOAL_WORDS[Math.floor(Math.random() * GOAL_WORDS.length)];
         return {
           ...DATA_INIT,
-          goalWord: goalWord
+          goalWord: goalWord,
+          alertModalMessage: "Game has been reset!",
+        };
+      }
+      case "reveal":{
+        return {
+          ...state,
+          alertModalMessage: `The word is ${state.goalWord}`,
         };
       }
     }
@@ -167,7 +175,10 @@ function App() {
           <Header />
           <Grid />
           <div>
-            <NewGameButton />
+            <div>
+            <GameControlButton content="New Game"/>
+            <GameControlButton content="Reveal Word"/>
+            </div>
             <Keyboard />
           </div>
         </div>
