@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../../App";
 const SuccessModal = () => {
-  const { data, dispatchData } = useContext(GlobalContext);
+  const { data, dispatchData, visualData, dispatchVisualData} = useContext(GlobalContext);
   var opacityClass = "";
-  if (data.showSuccessModal != "") {
-    // const interval = setInterval(() => {
-    //   dispatchData({
-    //     type: "hideModal",
-    //   });
-    //   clearInterval(interval);
-    // }, 2500);
+  if (visualData.showSuccessModal) {
+    const interval = setInterval(() => {
+      dispatchVisualData({
+        type: "hideModal",
+      });
+      clearInterval(interval);
+    }, 1500);
     opacityClass = "opacity-100";
   } else opacityClass = "opacity-0";
   return (

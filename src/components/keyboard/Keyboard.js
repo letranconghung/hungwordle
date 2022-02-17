@@ -1,14 +1,32 @@
 import React, { useEffect, useContext } from "react";
 import KeyboardRow from "./KeyboardRow";
 import { GlobalContext } from "../../App";
+import { GUESS_WORDS } from "../../data/GuessWords";
 const Keyboard = (props) => {
-  const {data, dispatchData} = useContext(GlobalContext)
+  const { data, dispatchData, visualData, dispatchVisualData } = useContext(GlobalContext);
+
   useEffect(() => {
     const filterAndSubmitInput = (e) => {
       if (e.key === "Enter") {
-        dispatchData({
-          type: "checkCurrentGuess"
-        })
+        if (data.currentGuess.length != 5) {
+          console.log("filterInput not enough letters");
+          console.log("length: ", data.currentGuess.length);
+          dispatchVisualData({
+            type: "showAlertModal",
+            alertModalMessage: "Not enough letters!",
+          });
+        } else if (!GUESS_WORDS.includes(data.currentGuess)) {
+          console.log("filterInput not in word list!");
+          dispatchVisualData({
+            type: "showAlertModal",
+            alertModalMessage: "Not in word list!",
+          });
+        } else {
+          console.log("filterInput valid, checkCurrentguess now.");
+          dispatchData({
+            type: "checkCurrentGuess",
+          });
+        }
       } else if (e.key === "Backspace") {
         dispatchData({
           type: "removeLetter",
@@ -21,7 +39,10 @@ const Keyboard = (props) => {
       }
     };
     document.addEventListener("keydown", filterAndSubmitInput);
-  }, []);
+    return () => {
+      document.removeEventListener("keydown", filterAndSubmitInput);
+    }
+  }, [data, visualData]);
 
   return (
     <div className="my-auto py-2">

@@ -3,7 +3,7 @@ import { GlobalContext } from "../../App";
 
 const GameControlButton = (props) => {
   const content = props.content;
-  const { data, dispatchData } = useContext(GlobalContext);
+  const { data, dispatchData, visualData, dispatchVisualData } = useContext(GlobalContext);
   if (content == "New Game") {
     return (
       <button
@@ -12,6 +12,10 @@ const GameControlButton = (props) => {
           dispatchData({
             type: "reset",
           });
+          dispatchVisualData({
+            type: "showAlertModal",
+            alertModalMessage: "Game has been reset!"
+          })
           e.target.blur();
         }}
       >
@@ -23,8 +27,9 @@ const GameControlButton = (props) => {
       <button
         className="mx-1 py-2 px-4 mb-1 rounded font-medium bg-slate-500 text-white"
         onClick={(e) => {
-          dispatchData({
-            type: "reveal",
+          dispatchVisualData({
+            type: "showAlertModal", 
+            alertModalMessage: `The word is ${data.goalWord}`
           });
           e.target.blur();
         }}
