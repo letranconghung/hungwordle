@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/wordleclone/static/css/main.db750289.css",
+    "main.js": "/wordleclone/static/js/main.6dd98315.js",
+    "index.html": "/wordleclone/index.html",
+    "main.db750289.css.map": "/wordleclone/static/css/main.db750289.css.map",
+    "main.6dd98315.js.map": "/wordleclone/static/js/main.6dd98315.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db750289.css",
+    "static/js/main.6dd98315.js"
+  ]
+}
