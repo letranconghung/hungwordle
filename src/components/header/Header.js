@@ -25,7 +25,7 @@ const Header = () => {
           onClick={(e) => {
             e.preventDefault();
             dispatchVisualData({
-              type: "showStatsModal",
+              type: "toggleStatsModal",
             });
           }}
         >

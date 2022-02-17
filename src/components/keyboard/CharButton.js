@@ -16,16 +16,17 @@ const CharButton = (props) => {
       colorClass = "bg-gray-600 text-white";
       break;
     case "white":
-      colorClass = "bg-gray-300 dark:bg-neutral-400 dark:text-white text-black";
+      colorClass = "bg-gray-300 dark:bg-neutral-500 dark:text-white text-black";
   }
   return (
     <button
       className={`px-4 py-7 sm:px-5 mx-1 rounded relative ${colorClass} transition-all`}
-      onClick={() => {
+      onClick={(e) => {
         dispatchData({
           type: "addLetter",
           letter: letter,
         });
+        e.target.blur();
       }}
     >
       <span

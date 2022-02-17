@@ -201,9 +201,9 @@ function App() {
         console.log("visualDataReducer case showSuccessModal");
         return { ...state, showSuccessModal: true };
       }
-      case "showStatsModal": {
-        console.log("visualDataReducer case showStatsModal");
-        return { ...state, showStatsModal: true };
+      case "toggleStatsModal": {
+        console.log("visualDataReducer case toggleStatsModal");
+        return { ...state, showStatsModal: !state.showStatsModal };
       }
     }
   };
@@ -216,7 +216,7 @@ function App() {
 
   useEffect(() => {
     // subscribe to changes in data to liaise between dispatch functions
-    console.log("linker useeffect: ", data);
+    console.log("linker useeffect: \n data", data, "\nvisualData\n", visualData);
     if (data.gameStatus != "playing" && !data.dataLogged) {
       console.log("linker ran");
       if (data.gameStatus == "failure") {
@@ -248,7 +248,7 @@ function App() {
         // handle failure
         ++storageLoad.gamesPlayed;
         storageLoad.currentStreak = 0;
-        ++storageLoad.scores["fail"];
+        ++storageLoad.scores["F"];
         storageLoad.winPercentage = Math.round(
           (storageLoad.gamesWon / storageLoad.gamesPlayed) * 100
         );
@@ -283,7 +283,7 @@ function App() {
             4: 0,
             5: 0,
             6: 0,
-            fail: 0,
+            F: 0,
           },
         })
       );
@@ -316,7 +316,7 @@ function App() {
         <div className="modals">
           <AlertModal />
           <SuccessModal />
-          {/* <StatsModal /> */}
+          <StatsModal />
         </div>
       </GlobalContext.Provider>
     </div>
