@@ -16,7 +16,7 @@ const CharButton = (props) => {
       colorClass = "bg-gray-600 text-white";
       break;
     case "white":
-      colorClass = "bg-gray-300 text-black";
+      colorClass = "bg-gray-300 dark:bg-neutral-400 dark:text-white text-black";
   }
   return (
     <button

@@ -16,8 +16,8 @@ const Cell = (props) => {
       break;
     case "white": {
       if (cellSettings.letter == "")
-        colorClass = "bg-white border-gray-300 border-2 text-black";
-      else colorClass = "bg-white border-black border-2 text-black";
+        colorClass = "border-gray-300 dark:border-zinc-700 border-2 blackGray";
+      else colorClass = "border-black dark:border-zinc-400 border-2 blackGray";
     }
   }
   return (

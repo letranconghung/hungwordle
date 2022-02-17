@@ -7,7 +7,7 @@ const GameControlButton = (props) => {
   if (content == "New Game") {
     return (
       <button
-        className="mx-1 py-2 px-4 mb-1 rounded bg-rose-500 text-white font-medium"
+        className="mx-1 py-2 px-4 mb-1 rounded font-medium bg-slate-500 text-white"
         onClick={(e) => {
           dispatchData({
             type: "reset",
@@ -21,7 +21,7 @@ const GameControlButton = (props) => {
   } else if (content == "Reveal Word") {
     return (
       <button
-        className="mx-1 py-2 px-4 mb-1 rounded bg-rose-500 text-white font-medium"
+        className="mx-1 py-2 px-4 mb-1 rounded font-medium bg-slate-500 text-white"
         onClick={(e) => {
           dispatchData({
             type: "reveal",

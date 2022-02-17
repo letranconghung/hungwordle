@@ -48,6 +48,7 @@ function App() {
     showSuccessModal: false,
     gameEnded: false,
     keyboardColors: KEYBOARD_COLORS_INIT,
+    darkMode: false,
   };
 
   const dataReducer = (state, action) => {
@@ -78,56 +79,58 @@ function App() {
         return { ...state, goalWord: action.goalWord };
       }
       case "checkCurrentGuess": {
-        if (state.currentGuess.length != 5) {
-          console.log("not 5-letter");
-          return { ...state, alertModalMessage: "Not enough letters!" };
-        } else if (!GUESS_WORDS.includes(state.currentGuess)) {
-          // invalid guess
-          console.log("There's no such word!");
-          return { ...state, alertModalMessage: "Not in word list!" };
-        } else {
-          var result = ["gray", "gray", "gray", "gray", "gray"];
-          var goalCharUsed = [false, false, false, false, false];
-          var keyboardColors = state.keyboardColors;
-          for (var goalIndex = 0; goalIndex < 5; ++goalIndex) {
-            const goalChar = state.goalWord[goalIndex];
-            for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
-              const guessChar = state.currentGuess[guessIndex];
-              if (
-                !goalCharUsed[goalIndex] &&
-                result[guessIndex] === "gray" &&
-                guessChar == goalChar
-              ) {
-                if (goalIndex == guessIndex) {
-                  result[guessIndex] = "green";
-                  keyboardColors[guessChar] = "green";
-                } else {
-                  result[guessIndex] = "yellow";
-                  keyboardColors[guessChar] = "yellow";
+        if (!state.gameEnded) {
+          if (state.currentGuess.length != 5) {
+            console.log("not 5-letter");
+            return { ...state, alertModalMessage: "Not enough letters!" };
+          } else if (!GUESS_WORDS.includes(state.currentGuess)) {
+            // invalid guess
+            console.log("There's no such word!");
+            return { ...state, alertModalMessage: "Not in word list!" };
+          } else {
+            var result = ["gray", "gray", "gray", "gray", "gray"];
+            var goalCharUsed = [false, false, false, false, false];
+            var keyboardColors = state.keyboardColors;
+            for (var goalIndex = 0; goalIndex < 5; ++goalIndex) {
+              const goalChar = state.goalWord[goalIndex];
+              for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
+                const guessChar = state.currentGuess[guessIndex];
+                if (
+                  !goalCharUsed[goalIndex] &&
+                  result[guessIndex] === "gray" &&
+                  guessChar == goalChar
+                ) {
+                  if (goalIndex == guessIndex) {
+                    result[guessIndex] = "green";
+                    keyboardColors[guessChar] = "green";
+                  } else {
+                    result[guessIndex] = "yellow";
+                    keyboardColors[guessChar] = "yellow";
+                  }
+                  goalCharUsed[goalIndex] = true;
                 }
-                goalCharUsed[goalIndex] = true;
               }
             }
-          }
-          for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
-            const guessChar = state.currentGuess[guessIndex];
-            if (keyboardColors[guessChar] == "white")
-              keyboardColors[guessChar] = "gray";
-          }
-          console.log("finished comparison:\n", result);
-          if (state.currentGuess == state.goalWord)
+            for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
+              const guessChar = state.currentGuess[guessIndex];
+              if (keyboardColors[guessChar] == "white")
+                keyboardColors[guessChar] = "gray";
+            }
+            console.log("finished comparison:\n", result);
+            if (state.currentGuess == state.goalWord)
+              return {
+                ...state,
+                currentGuess: "",
+                knownGridColors: [...state.knownGridColors, ...result],
+                showSuccessModal: true,
+                gameEnded: true,
+              };
             return {
               ...state,
               currentGuess: "",
               knownGridColors: [...state.knownGridColors, ...result],
-              showSuccessModal: true,
-              gameEnded: true,
             };
-          return {
-            ...state,
-            currentGuess: "",
-            knownGridColors: [...state.knownGridColors, ...result],
-          };
+          }
         }
       }
       case "hideModal": {
@@ -143,10 +146,16 @@ function App() {
           alertModalMessage: "Game has been reset!",
         };
       }
-      case "reveal":{
+      case "reveal": {
         return {
           ...state,
           alertModalMessage: `The word is ${state.goalWord}`,
+        };
+      }
+      case "toggleDarkMode": {
+        return {
+          ...state,
+          darkMode: !state.darkMode,
         };
       }
     }
@@ -163,21 +172,22 @@ function App() {
     return () => {};
   }, []);
 
+  const darkModeClass = data.darkMode ? " dark" : ""
   return (
-    <div className="App">
+    <div className={`App${darkModeClass}`}>
       <GlobalContext.Provider
         value={{
           data: data,
           dispatchData: dispatchData,
         }}
       >
-        <div className="h-screen flex flex-col content-between">
+        <div className="h-screen flex flex-col content-between bg-gray-50 dark:bg-zinc-900">
           <Header />
           <Grid />
           <div>
             <div>
-            <GameControlButton content="New Game"/>
-            <GameControlButton content="Reveal Word"/>
+              <GameControlButton content="New Game" />
+              <GameControlButton content="Reveal Word" />
             </div>
             <Keyboard />
           </div>
