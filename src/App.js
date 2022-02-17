@@ -8,6 +8,7 @@ import { GUESS_WORDS } from "./data/GuessWords";
 import AlertModal from "./components/modals/AlertModal";
 import SuccessModal from "./components/modals/SuccessModal";
 import GameControlButton from "./components/gameControl/GameControlButton";
+import StatsModal from "./components/gameControl/StatsModal/StatsModal";
 export const GlobalContext = React.createContext();
 function App() {
   const DATA_INIT = {
@@ -15,7 +16,7 @@ function App() {
     letters: [],
     currentGuess: "",
     knownGridColors: [],
-    gameEnded: false,
+    gameStatus: "playing",
     dataLogged: false,
     keyboardColors: {
       q: "white",
@@ -54,7 +55,7 @@ function App() {
         if (
           state.letters.length < 30 &&
           state.currentGuess.length <= 4 &&
-          !state.gameEnded
+          state.gameStatus == "playing"
         ) {
           return {
             ...state,
@@ -79,7 +80,7 @@ function App() {
       }
       case "checkCurrentGuess": {
         console.log("dataReducer case checkCurrentGuess");
-        if (!state.gameEnded) {
+        if (state.gameStatus == "playing") {
           var result = ["gray", "gray", "gray", "gray", "gray"];
           var goalCharUsed = [false, false, false, false, false];
           var keyboardColors = state.keyboardColors;
@@ -109,12 +110,19 @@ function App() {
               keyboardColors[guessChar] = "gray";
           }
           if (state.currentGuess == state.goalWord) {
-            console.log("correct word! gameEnded: true");
+            console.log("correct word!");
             return {
               ...state,
               currentGuess: "",
               knownGridColors: [...state.knownGridColors, ...result],
-              gameEnded: true,
+              gameStatus: "success",
+            };
+          } else if (state.letters.length == 30) {
+            return {
+              ...state,
+              currentGuess: "",
+              knownGridColors: [...state.knownGridColors, ...result],
+              gameStatus: "failure",
             };
           } else
             return {
@@ -191,37 +199,64 @@ function App() {
       }
       case "showSuccessModal": {
         console.log("visualDataReducer case showSuccessModal");
-        return {...state, showSuccessModal: true};
+        return { ...state, showSuccessModal: true };
+      }
+      case "showStatsModal": {
+        console.log("visualDataReducer case showStatsModal");
+        return { ...state, showStatsModal: true };
       }
     }
   };
   const [visualData, dispatchVisualData] = useReducer(visualDataReducer, {
     alertModalMessage: "",
     showSuccessModal: false,
+    showStatsModal: false,
   });
   const [data, dispatchData] = useReducer(dataReducer, DATA_INIT);
 
   useEffect(() => {
     // subscribe to changes in data to liaise between dispatch functions
     console.log("linker useeffect: ", data);
-    if (data.gameEnded && !data.dataLogged) {
+    if (data.gameStatus != "playing" && !data.dataLogged) {
       console.log("linker ran");
-      dispatchVisualData({
-        type: "showSuccessModal"
-      })
-      if (localStorage.getItem("scores")) {
-        var scores = JSON.parse(localStorage.getItem("scores"));
-        scores[Math.floor(data.letters.length / 5) - 1] += 1;
-        console.log("new scores: ", scores);
-        localStorage.setItem("scores", JSON.stringify(scores));
-        dispatchData({
-          type: "dataLogged",
+      if (data.gameStatus == "failure") {
+        dispatchVisualData({
+          type: "showAlertModal",
+          alertModalMessage: "You failed! Try again!",
         });
       } else {
-        var scores = new Array(6).fill(0);
-        scores[Math.floor(data.letters.length / 5) - 1] = 1;
-        localStorage.setItem("scores", JSON.stringify(scores));
+        dispatchVisualData({
+          type: "showSuccessModal",
+        });
       }
+      var storageLoad = JSON.parse(localStorage.getItem("hungWordleData"));
+      if (data.gameStatus == "success") {
+        // handle success
+        var score = Math.floor(data.letters.length / 5);
+        ++storageLoad.gamesPlayed;
+        ++storageLoad.gamesWon;
+        ++storageLoad.currentStreak;
+        storageLoad.maxStreak = Math.max(
+          storageLoad.maxStreak,
+          storageLoad.currentStreak
+        );
+        ++storageLoad.scores[score];
+        storageLoad.winPercentage = Math.round(
+          (storageLoad.gamesWon / storageLoad.gamesPlayed) * 100
+        );
+      } else {
+        // handle failure
+        ++storageLoad.gamesPlayed;
+        storageLoad.currentStreak = 0;
+        ++storageLoad.scores["fail"];
+        storageLoad.winPercentage = Math.round(
+          (storageLoad.gamesWon / storageLoad.gamesPlayed) * 100
+        );
+      }
+      localStorage.setItem("hungWordleData", JSON.stringify(storageLoad));
+      dispatchData({
+        type: "dataLogged",
+      });
     }
   }, [data]);
 
@@ -232,6 +267,27 @@ function App() {
       type: "setGoalWord",
       goalWord: goalWord,
     });
+    if (!localStorage.getItem("hungWordleData")) {
+      localStorage.setItem(
+        "hungWordleData",
+        JSON.stringify({
+          gamesPlayed: 0,
+          gamesWon: 0,
+          winPercentage: 0,
+          currentStreak: 0,
+          maxStreak: 0,
+          scores: {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            fail: 0,
+          },
+        })
+      );
+    }
     return () => {};
   }, []);
 
@@ -257,8 +313,11 @@ function App() {
             <Keyboard />
           </div>
         </div>
-        <AlertModal />
-        <SuccessModal />
+        <div className="modals">
+          <AlertModal />
+          <SuccessModal />
+          {/* <StatsModal /> */}
+        </div>
       </GlobalContext.Provider>
     </div>
   );

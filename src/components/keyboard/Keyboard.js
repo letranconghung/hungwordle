@@ -7,35 +7,37 @@ const Keyboard = (props) => {
 
   useEffect(() => {
     const filterAndSubmitInput = (e) => {
-      if (e.key === "Enter") {
-        if (data.currentGuess.length != 5) {
-          console.log("filterInput not enough letters");
-          console.log("length: ", data.currentGuess.length);
-          dispatchVisualData({
-            type: "showAlertModal",
-            alertModalMessage: "Not enough letters!",
-          });
-        } else if (!GUESS_WORDS.includes(data.currentGuess)) {
-          console.log("filterInput not in word list!");
-          dispatchVisualData({
-            type: "showAlertModal",
-            alertModalMessage: "Not in word list!",
-          });
-        } else {
-          console.log("filterInput valid, checkCurrentguess now.");
+      if (data.gameStatus == "playing"){
+        if (e.key === "Enter") {
+          if (data.currentGuess.length != 5) {
+            console.log("filterInput not enough letters");
+            console.log("length: ", data.currentGuess.length);
+            dispatchVisualData({
+              type: "showAlertModal",
+              alertModalMessage: "Not enough letters!",
+            });
+          } else if (!GUESS_WORDS.includes(data.currentGuess)) {
+            console.log("filterInput not in word list!");
+            dispatchVisualData({
+              type: "showAlertModal",
+              alertModalMessage: "Not in word list!",
+            });
+          } else {
+            console.log("filterInput valid, checkCurrentguess now.");
+            dispatchData({
+              type: "checkCurrentGuess",
+            });
+          }
+        } else if (e.key === "Backspace") {
           dispatchData({
-            type: "checkCurrentGuess",
+            type: "removeLetter",
+          });
+        } else if (e.code.slice(0, 3) === "Key") {
+          dispatchData({
+            type: "addLetter",
+            letter: e.key.toLowerCase(),
           });
         }
-      } else if (e.key === "Backspace") {
-        dispatchData({
-          type: "removeLetter",
-        });
-      } else if (e.code.slice(0, 3) === "Key") {
-        dispatchData({
-          type: "addLetter",
-          letter: e.key.toLowerCase(),
-        });
       }
     };
     document.addEventListener("keydown", filterAndSubmitInput);

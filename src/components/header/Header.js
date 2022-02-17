@@ -6,9 +6,10 @@ import { MdOutlineDarkMode } from "react-icons/md";
 import { GlobalContext } from "../../App";
 import { IconContext } from "react-icons";
 const Header = () => {
-  const { data, dispatchData } = useContext(GlobalContext);
+  const { data, dispatchData, visualData, dispatchVisualData } =
+    useContext(GlobalContext);
   return (
-    <div className="w-screen flex justify-between border-b-2 border-b-gray-500 dark:border-b-gray-200">
+    <div className="w-screen flex justify-between border-b-2 border-b-gray-500 dark:border-b-gray-600">
       <a href="/" className="text-xl my-auto ml-5">
         <AiOutlineQuestionCircle className="blackGray" />
       </a>
@@ -19,9 +20,17 @@ const Header = () => {
         HungWordle
       </a>
       <div className="text-xl my-auto mr-4">
-        <a href="/" className="mx-2">
+        <span
+          className="mx-2 hover:cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            dispatchVisualData({
+              type: "showStatsModal",
+            });
+          }}
+        >
           <BiBarChartAlt2 className="inline blackGray" />
-        </a>
+        </span>
         <span
           className="mx-2 hover:cursor-pointer"
           onClick={(e) => {
