@@ -4,12 +4,12 @@ const SuccessModal = () => {
   const { data, dispatchData } = useContext(GlobalContext);
   var opacityClass = "";
   if (data.showSuccessModal != "") {
-    const interval = setInterval(() => {
-      dispatchData({
-        type: "hideModal",
-      });
-      clearInterval(interval);
-    }, 2500);
+    // const interval = setInterval(() => {
+    //   dispatchData({
+    //     type: "hideModal",
+    //   });
+    //   clearInterval(interval);
+    // }, 2500);
     opacityClass = "opacity-100";
   } else opacityClass = "opacity-0";
   return (

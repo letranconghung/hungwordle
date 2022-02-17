@@ -3,7 +3,6 @@ import KeyboardRow from "./KeyboardRow";
 import { GlobalContext } from "../../App";
 const Keyboard = (props) => {
   const {data, dispatchData} = useContext(GlobalContext)
-  console.log(data);
   useEffect(() => {
     const filterAndSubmitInput = (e) => {
       if (e.key === "Enter") {

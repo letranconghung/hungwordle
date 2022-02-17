@@ -5,12 +5,12 @@ const AlertModal = (props) => {
   const { data, dispatchData } = useContext(GlobalContext);
   var opacityClass = "";
   if (data.alertModalMessage != "") {
-    const interval = setInterval(() => {
-      dispatchData({
-        type: "hideModal",
-      });
-      clearInterval(interval);
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   dispatchData({
+    //     type: "hideModal",
+    //   });
+    //   clearInterval(interval);
+    // }, 1000);
     opacityClass = "opacity-100";
   } else opacityClass = "opacity-0";
   return (
