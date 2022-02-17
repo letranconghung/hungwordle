@@ -10,9 +10,17 @@ const Header = () => {
     useContext(GlobalContext);
   return (
     <div className="w-screen flex justify-between border-b-2 border-b-gray-500 dark:border-b-gray-600">
-      <a href="/" className="text-xl my-auto ml-5">
+      <span
+        className="text-xl my-auto ml-5 hover:cursor-pointer"
+        onClick={(e) => {
+          e.preventDefault();
+          dispatchVisualData({
+            type: "toggleInstructionsModal",
+          });
+        }}
+      >
         <AiOutlineQuestionCircle className="blackGray" />
-      </a>
+      </span>
       <a
         href="/"
         className="font-extrabold text-xl pl-8 py-4 text-center blackGray"

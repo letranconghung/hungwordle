@@ -9,6 +9,7 @@ import AlertModal from "./components/modals/AlertModal";
 import SuccessModal from "./components/modals/SuccessModal";
 import GameControlButton from "./components/gameControl/GameControlButton";
 import StatsModal from "./components/gameControl/StatsModal/StatsModal";
+import InstructionsModal from "./components/gameControl/InstructionsModal/InstructionsModal";
 export const GlobalContext = React.createContext();
 function App() {
   const DATA_INIT = {
@@ -205,12 +206,17 @@ function App() {
         console.log("visualDataReducer case toggleStatsModal");
         return { ...state, showStatsModal: !state.showStatsModal };
       }
+      case "toggleInstructionsModal": {
+        console.log("visualDataReducer case toggleInstructionsModal");
+        return {...state, showInstructionsModal: !state.showInstructionsModal}
+      }
     }
   };
   const [visualData, dispatchVisualData] = useReducer(visualDataReducer, {
     alertModalMessage: "",
     showSuccessModal: false,
     showStatsModal: false,
+    showInstructionsModal: false
   });
   const [data, dispatchData] = useReducer(dataReducer, DATA_INIT);
 
@@ -317,6 +323,7 @@ function App() {
           <AlertModal />
           <SuccessModal />
           <StatsModal />
+          <InstructionsModal />
         </div>
       </GlobalContext.Provider>
     </div>
