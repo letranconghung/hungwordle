@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/hungwordle/static/css/main.8e7a96e7.css",
-    "main.js": "/hungwordle/static/js/main.c4039da8.js",
+    "main.js": "/hungwordle/static/js/main.0efdbf2a.js",
     "index.html": "/hungwordle/index.html",
     "main.8e7a96e7.css.map": "/hungwordle/static/css/main.8e7a96e7.css.map",
-    "main.c4039da8.js.map": "/hungwordle/static/js/main.c4039da8.js.map"
+    "main.0efdbf2a.js.map": "/hungwordle/static/js/main.0efdbf2a.js.map"
   },
   "entrypoints": [
     "static/css/main.8e7a96e7.css",
-    "static/js/main.c4039da8.js"
+    "static/js/main.0efdbf2a.js"
   ]
 }
