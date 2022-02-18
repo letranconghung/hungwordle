@@ -49,6 +49,34 @@ function App() {
     },
     darkMode: false,
   };
+  const compareWords = (guessWord, goalWord) => {
+    var result = ["gray", "gray", "gray", "gray", "gray"];
+    var goalCharUsed = [false, false, false, false, false];
+    for (var i = 0; i < 5; ++i) {
+      if (guessWord[i] == goalWord[i]) {
+        result[i] = "green";
+        goalCharUsed[i] = true;
+      }
+    }
+    for (var goalIndex = 0; goalIndex < 5; ++goalIndex) {
+      if (goalCharUsed[goalIndex]) continue;
+      else {
+        var goalChar = goalWord[goalIndex];
+        for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
+          var guessChar = guessWord[guessIndex];
+          if (result[guessIndex] == "green") {
+            continue;
+          } else if (guessChar == goalChar) {
+            result[guessIndex] = "yellow";
+            goalCharUsed[goalIndex] = true;
+            break;
+          }
+        }
+      }
+    }
+    console.log("finished comparison:\n", result);
+    return result;
+  };
   const dataReducer = (state, action) => {
     switch (action.type) {
       case "addLetter": {
@@ -82,33 +110,15 @@ function App() {
       case "checkCurrentGuess": {
         // console.log("dataReducer case checkCurrentGuess");
         if (state.gameStatus == "playing") {
-          var result = ["gray", "gray", "gray", "gray", "gray"];
-          var goalCharUsed = [false, false, false, false, false];
-          var keyboardColors = state.keyboardColors;
-          for (var goalIndex = 0; goalIndex < 5; ++goalIndex) {
-            const goalChar = state.goalWord[goalIndex];
-            for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
-              const guessChar = state.currentGuess[guessIndex];
-              if (
-                !goalCharUsed[goalIndex] &&
-                result[guessIndex] === "gray" &&
-                guessChar == goalChar
-              ) {
-                if (goalIndex == guessIndex) {
-                  result[guessIndex] = "green";
-                  keyboardColors[guessChar] = "green";
-                } else {
-                  result[guessIndex] = "yellow";
-                  keyboardColors[guessChar] = "yellow";
-                }
-                goalCharUsed[goalIndex] = true;
-              }
-            }
-          }
+          const result = compareWords(state.currentGuess, state.goalWord);
           for (var guessIndex = 0; guessIndex < 5; ++guessIndex) {
             const guessChar = state.currentGuess[guessIndex];
-            if (keyboardColors[guessChar] == "white")
-              keyboardColors[guessChar] = "gray";
+            if (result[guessIndex] == "green")
+              state.keyboardColors[guessChar] = "green";
+            else {
+              if (state.keyboardColors[guessChar] != "green")
+                state.keyboardColors[guessChar] = result[guessIndex];
+            }
           }
           if (state.currentGuess == state.goalWord) {
             // console.log("correct word!");
@@ -208,7 +218,10 @@ function App() {
       }
       case "toggleInstructionsModal": {
         // console.log("visualDataReducer case toggleInstructionsModal");
-        return {...state, showInstructionsModal: !state.showInstructionsModal}
+        return {
+          ...state,
+          showInstructionsModal: !state.showInstructionsModal,
+        };
       }
     }
   };
@@ -216,7 +229,7 @@ function App() {
     alertModalMessage: "",
     showSuccessModal: false,
     showStatsModal: false,
-    showInstructionsModal: false
+    showInstructionsModal: false,
   });
   const [data, dispatchData] = useReducer(dataReducer, DATA_INIT);
 
@@ -268,7 +281,8 @@ function App() {
 
   useEffect(() => {
     // console.log("app initialization goalword setting");
-    const goalWord = GOAL_WORDS[Math.floor(Math.random() * GOAL_WORDS.length)];
+    // const goalWord = GOAL_WORDS[Math.floor(Math.random() * GOAL_WORDS.length)];
+    const goalWord = "otter";
     dispatchData({
       type: "setGoalWord",
       goalWord: goalWord,
@@ -308,7 +322,7 @@ function App() {
           dispatchVisualData: dispatchVisualData,
         }}
       >
-        <div className="h-screen flex flex-col justify-between bg-gray-50 dark:bg-zinc-900">
+        <div className="h-full flex flex-col justify-between bg-gray-50 dark:bg-zinc-900">
           <Header />
           <Grid />
           <div className="pb-4">

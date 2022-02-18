@@ -28,7 +28,7 @@ const InstructionsModal = () => {
         >
           <MdOutlineClose className="text-2xl blackGray" />
         </button>
-        <div class="w-[20rem] sm:w-[32rem] text-left blackGray">
+        <div className="w-[20rem] sm:w-[32rem] text-left blackGray">
           <h2 className="font-bold text-lg mb-5 text-center">How To Play</h2>
           <p className="mb-2 text-sm">
             Guess the <strong>WORDLE</strong> in six tries.
